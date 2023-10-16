@@ -1,17 +1,12 @@
-# pull official base image
-FROM python:3.11.6-slim-bullseye
+# Must set:
+# FRP_SERVER_ADDR, FRP_SERVER_PORT, FRP_LOCAL_SERVICE_ADDR, FRP_LOCAL_SERVICE_PORT, FRP_REMOTE_PORT
+FROM debian
 
-# set work directory
-WORKDIR /app
+RUN apt update && apt install -y wget
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+RUN wget https://github.com/fatedier/frp/releases/download/v0.51.3/frp_0.51.3_linux_amd64.tar.gz
+RUN tar -xf frp_0.51.3_linux_amd64.tar.gz
 
-# install dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+COPY ./frpc.toml /frp_0.51.3_linux_amd64/frpc.toml
 
-# copy project
-COPY . /app/
+ENTRYPOINT ["/frp_0.51.3_linux_amd64/frpc", "-c", "/frp_0.51.3_linux_amd64/frpc.toml"]
