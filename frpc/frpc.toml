@@ -1,10 +1,9 @@
-# frpc.toml
-serverAddr = "{{ .Envs.FRP_SERVER_ADDR }}"
-serverPort = {{ .Envs.FRP_SERVER_PORT }}
+serverAddr = "FRP_SERVER_ADDR"
+serverPort = FRP_SERVER_PORT
 
 [[proxies]]
 name = "serv"
 type = "tcp"
-localIP = "{{ .Envs.FRP_LOCAL_SERVICE_ADDR }}"
-localPort = "{{ .Envs.FRP_LOCAL_SERVICE_PORT }}"
-remotePort = "{{ .Envs.FRP_REMOTE_PORT }}"
+localIP = "FRP_LOCAL_SERVICE_ADDR"
+localPort = FRP_LOCAL_SERVICE_PORT
+remotePort = FRP_REMOTE_PORT

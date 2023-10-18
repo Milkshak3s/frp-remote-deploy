@@ -4,9 +4,11 @@ FROM debian
 
 RUN apt update && apt install -y wget
 
-RUN wget https://github.com/fatedier/frp/releases/download/v0.51.3/frp_0.51.3_linux_amd64.tar.gz
-RUN tar -xf frp_0.51.3_linux_amd64.tar.gz
+RUN wget https://github.com/fatedier/frp/releases/download/v0.52.1/frp_0.52.1_linux_amd64.tar.gz
+RUN tar -xf frp_0.52.1_linux_amd64.tar.gz
 
-COPY ./frpc.toml /frp_0.51.3_linux_amd64/frpc.toml
+COPY ./run_frpc.sh ./run_frpc.sh
+RUN chmod +x ./run_frpc.sh
+COPY ./frpc.toml /frp_0.52.1_linux_amd64/frpc.toml
 
-ENTRYPOINT ["/frp_0.51.3_linux_amd64/frpc", "-c", "/frp_0.51.3_linux_amd64/frpc.toml"]
+ENTRYPOINT ["./run_frpc.sh"]
